@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Course } from '../course';
 import { CourseService } from '../course.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-create-course',
@@ -10,9 +11,9 @@ import { Router } from '@angular/router';
 })
 export class CreateCourseComponent implements OnInit {
   course: Course = new Course();
-  constructor(private courseService: CourseService, private router: Router) { }
+  constructor(private courseService: CourseService, private router: Router, private authService: AuthService) { }
   ngOnInit(): void {
-
+    this.authService.validateToken();
   }
   saveCourse() {
     this.courseService.createCourse(this.course).subscribe(data => {

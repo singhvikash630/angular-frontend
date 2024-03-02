@@ -1,5 +1,8 @@
 <div class="col-md-6 offset-md-3">
     <h3>Please Login!</h3>
+    <div *ngIf="isLogin">
+        <h4>Invalid username and password Please try again</h4>
+    </div>
 
     <form (ngSubmit)="onSubmit()">
         <div class="form-group">
@@ -9,12 +12,10 @@
 
         <div class="form-group">
             <label>Password</label>
-            <input type="text" class="form-control" id="password" name="password"
-                [(ngModel)]="user.password" />
+            <input type="text" class="form-control" id="password" name="password" [(ngModel)]="user.password" />
         </div>
         <button class="btn btn-success" type="submit">Submit</button>
 
     </form>
 
 </div>
-

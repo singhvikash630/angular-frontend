@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Course } from '../course';
 import { CourseService } from '../course.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-course-list',
@@ -10,8 +11,9 @@ import { Router } from '@angular/router';
 })
 export class CourseListComponent implements OnInit {
   courses: Course[] | undefined;
-  constructor(private courseService: CourseService, private router: Router) { }
+  constructor(private courseService: CourseService, private router: Router, private authService:AuthService) { }
   ngOnInit(): void {
+    this.authService.validateToken();
     this.getCourseList();
   }
   private getCourseList() {

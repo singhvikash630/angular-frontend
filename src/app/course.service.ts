@@ -15,7 +15,7 @@ export class CourseService {
   constructor(private httpClient: HttpClient, private authService: AuthService, private router: Router) { }
 
   getCourseList(): Observable<Course[]> {
-    this.validateToken();
+    this.authService.validateToken();
 
     return this.httpClient.get<Course[]>(`${this.baseURL}`, {
       headers: new HttpHeaders({
@@ -25,7 +25,7 @@ export class CourseService {
   }
 
   createCourse(course: Course): Observable<Object> {
-    this.validateToken();
+    this.authService.validateToken();
     return this.httpClient.post(`${this.baseURL}`, course, {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -34,7 +34,7 @@ export class CourseService {
   }
 
   getCourseById(id: number): Observable<Course> {
-    this.validateToken();
+    this.authService.validateToken();
     return this.httpClient.get<Course>(`${this.baseURL}/${id}`, {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -43,7 +43,7 @@ export class CourseService {
   }
 
   updateCourse(id: number, course: Course): Observable<Course> {
-    this.validateToken();
+    this.authService.validateToken();
     return this.httpClient.put<Course>(`${this.baseURL}/${id}`, course, {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -52,17 +52,11 @@ export class CourseService {
   }
 
   deleteCourse(id: number): Observable<Object> {
-    this.validateToken();
+    this.authService.validateToken();
     return this.httpClient.delete(`${this.baseURL}/${id}`, {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       })
     });
-  }
-
-  validateToken() {
-    if (localStorage.getItem('token') == null) {
-      this.router.navigate([`/login`]);
-    }
   }
 }
